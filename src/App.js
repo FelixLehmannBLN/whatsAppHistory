@@ -3,27 +3,65 @@ import React, { Component } from 'react';
 import Bubble from './components/bubble';
 import Wrapper from './components/chat';
 import chat from './assets/_chat.json';
+import DateSeperator from './components/date-seperator'
 
-const dayOne = Object.keys(chat)[0];
+const entries = Object.keys(chat);
+const dayOne = entries[0];
 const messageTimes = Object.keys(chat[dayOne]);
 
+
+
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { whoAmI: 'Felix' };
+    this.renderBubbles = this.renderBubbles.bind(this);
+  }
+
   render() {
     return (
-      <Wrapper>
-        {dayOne}
-        {renderBubbles()}
-      </Wrapper>
+      <React.Fragment>
+        <button onClick={this.onPerspectiveSwitch.bind(this, 'Manon')}>Manon</button>
+        <button onClick={this.onPerspectiveSwitch.bind(this, 'Felix')}>Felix</button>
+        <Wrapper>
+          {this.renderBubbles()}
+        </Wrapper>
+      </React.Fragment>
     );
+  }
+
+
+  renderBubbles() {
+    return entries.map(date => {
+      return (
+        <React.Fragment>
+          {<DateSeperator>
+            {date}
+          </DateSeperator>}
+          {Object.keys(chat[date]).map(time => {
+            const dateEntry = chat[date][time]
+            const { author, text } = dateEntry;
+            const isMe = author === this.state.whoAmI;
+            return <Bubble
+              key={`${dateEntry}${time}`}
+              me={isMe}
+              name={author}
+              time={time}
+              text={text}
+            />
+          })
+          }
+        </React.Fragment>
+      )
+    })
+  }
+
+  onPerspectiveSwitch(perspective) {
+    console.log(perspective)
+    this.setState({
+      whoAmI: perspective
+    })
   }
 }
 
 export default App;
-
-function renderBubbles() {
-  return messageTimes.map(time => {
-    console.log(time)
-    const me = chat[dayOne][time]['author'] === 'Felix';
-     return <Bubble key={`${dayOne}${time}`} me={me} name={chat[dayOne][time]['author']} time={time} text={chat[dayOne][time]['text']} />
-  })
-}

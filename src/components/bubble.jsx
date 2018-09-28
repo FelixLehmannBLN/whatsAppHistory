@@ -34,7 +34,6 @@ const StyledTime = styled.p`
 
 export default class Bubble extends Component {
   render() {
-    console.log(this.props)
     return (
       <StyledBubbleWrapper>
         <StyledBubble me={this.props.me}>

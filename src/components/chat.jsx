@@ -9,7 +9,6 @@ const StyledWrapper = styled.div`
 
 export default class Chat extends Component {
   render() {
-    console.log(this.props)
     return (
       <StyledWrapper>{this.props.children}</StyledWrapper>
     );
