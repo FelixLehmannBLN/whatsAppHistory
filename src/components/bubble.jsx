@@ -9,7 +9,7 @@ const StyledBubbleWrapper = styled.div`
 `
 
 const StyledBubble = styled.div`
-width: 240px;
+width: 450px;
 height: auto;
 display: block;
 border-radius: 4px;
@@ -18,12 +18,11 @@ position: relative;
 margin-bottom: 25px;
 padding: 0 10px;
  background: ${(props => props.me === true ? `${colors.silver}` : `${colors.aqua}`)};
-align-self: ${ (props => props.me === true ? 'end' : 'start')};
+align-self: ${ (props => props.me === true ? 'flex-end' : 'flex-start')};
 `
 
 const StyledName = styled.p`
-color: ${(props => props.me === true ? `${colors.silver}` : `${colors.aqua}`)};
-
+  color: ${(props => props.me === true ? `${colors.gray}` : `${colors.navy}`)};
   font-weight: bold;
   font-size: 0.8rem;
 `
@@ -39,7 +38,7 @@ export default class Bubble extends Component {
     return (
       <StyledBubbleWrapper>
         <StyledBubble me={this.props.me}>
-          <StyledName>{this.props.name}</StyledName>
+          <StyledName me={this.props.me}>{this.props.name}</StyledName>
           <StyledText>{this.props.text}</StyledText>
           <StyledTime>{this.props.time}</StyledTime>
         </StyledBubble>

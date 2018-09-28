@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 
 import Bubble from './components/bubble';
-import Chat from './components/chat';
+import Wrapper from './components/chat';
+import chat from './assets/_chat.json';
+
+const dayOne = Object.keys(chat)[0];
+const messageTimes = Object.keys(chat[dayOne]);
 
 class App extends Component {
   render() {
     return (
-      <Chat>
-        <Bubble me name='Felix' time='19:30' text='This is a really nice chat experience' />
-        <Bubble name='Gabriel' time='19:31' text='Yes, i think so too' />
-      </Chat>
+      <Wrapper>
+        {dayOne}
+        {renderBubbles()}
+      </Wrapper>
     );
   }
 }
 
 export default App;
+
+function renderBubbles() {
+  return messageTimes.map(time => {
+    console.log(time)
+    const me = chat[dayOne][time]['author'] === 'Felix';
+     return <Bubble key={`${dayOne}${time}`} me={me} name={chat[dayOne][time]['author']} time={time} text={chat[dayOne][time]['text']} />
+  })
+}
